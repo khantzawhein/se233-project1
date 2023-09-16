@@ -25,7 +25,7 @@
                <children>
                   <AnchorPane prefHeight="600.0" prefWidth="400.0">
                      <children>
-                        <Button layoutX="123.0" layoutY="196.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="155.0" text="Resize">
+                        <Button fx:id="resizeBtn" layoutX="123.0" layoutY="196.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="155.0" text="Resize">
                            <styleClass>
                               <String fx:value="btn" />
                               <String fx:value="btn-primary" />
@@ -34,7 +34,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="600.0" prefWidth="400.0">
                      <children>
-                        <Button layoutX="123.0" layoutY="196.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="155.0" text="Watermark">
+                        <Button fx:id="watermarkBtn" layoutX="123.0" layoutY="196.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="155.0" text="Watermark">
                            <styleClass>
                               <String fx:value="btn" />
                               <String fx:value="btn-success" />

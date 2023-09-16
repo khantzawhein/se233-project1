@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.se233.photoeditor.controllers.DragAndDropController">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="800.0">
+         <center>
+            <AnchorPane BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane fx:id="dropArea" layoutX="155.0" layoutY="64.0" prefHeight="260.0" prefWidth="491.0" styleClass="dashed-border">
+                     <children>
+                        <Text fx:id="dropLabel" fill="#887e7e" layoutX="147.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-border-color: black;" text="Drag JPG, PNG or ZIP file(s) here" />
+                        <ImageView fitHeight="87.0" fitWidth="95.0" layoutX="198.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/file-icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <Text layoutX="161.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to do?">
+                     <font>
+                        <Font name="Calibri" size="22.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <AnchorPane prefHeight="159.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="addWaterMarkBtn" layoutX="156.0" layoutY="6.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="220.0" style="-fx-background-color: #A47551; -fx-background-radius: 11px;" text="Add Watermark" textFill="#f5f5f5">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="resizeBtn" layoutX="427.0" layoutY="6.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="220.0" style="-fx-background-color: #A47551; -fx-background-radius: 11px;" text="Resize" textFill="WHITE" />
+                  <Text layoutX="586.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developed by Potato &amp; French Fry">
+                     <font>
+                        <Font name="Comic Sans MS" size="13.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </bottom>
+         <top>
+            <AnchorPane prefHeight="100.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

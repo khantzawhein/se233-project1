@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.se233.photoeditor.controllers.WatermarkController">
+   <children>
+      <BorderPane prefHeight="700.0" prefWidth="800.0">
+         <center>
+            <HBox prefHeight="500.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="500.0" prefWidth="398.0">
+                     <children>
+                        <Label layoutX="27.0" layoutY="14.0" text="Preview">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <StackPane layoutX="33.0" layoutY="46.0" prefHeight="315.0" prefWidth="352.0">
+                           <children>
+                              <ImageView fx:id="previewImageView" fitHeight="306.0" fitWidth="339.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
+                           </children>
+                        </StackPane>
+                        <Text layoutX="70.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:" />
+                        <ProgressBar fx:id="progressBar" layoutX="133.0" layoutY="421.0" prefWidth="200.0" progress="0.0" />
+                        <Button fx:id="previousImgBtn" layoutX="258.0" layoutY="370.0" mnemonicParsing="false" text="Previous" />
+                        <Button fx:id="nextImgBtn" layoutX="340.0" layoutY="370.0" mnemonicParsing="false" text="Next" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="500.0" prefWidth="400.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="14.0" text="Text">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="watermarkText" layoutX="28.0" layoutY="42.0" prefHeight="31.0" prefWidth="247.0" promptText="Eg. Lorem Ipsum" />
+                        <ColorPicker fx:id="colorPicker" layoutX="286.0" layoutY="44.0" prefHeight="26.0" prefWidth="100.0">
+                           <value>
+                              <Color />
+                           </value>
+                        </ColorPicker>
+                        <ComboBox fx:id="fontPicker" layoutX="28.0" layoutY="90.0" prefHeight="26.0" prefWidth="360.0" promptText="Choose a font" />
+                        <Slider fx:id="rotationSlider" layoutX="26.0" layoutY="161.0" majorTickUnit="10.0" max="180.0" min="-180.0" prefHeight="16.0" prefWidth="356.0" showTickLabels="true" showTickMarks="true" />
+                        <Label layoutX="28.0" layoutY="136.0" text="Rotation">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Slider fx:id="paddingSlider" layoutX="26.0" layoutY="229.0" majorTickUnit="100.0" max="300.0" min="-300.0" prefHeight="16.0" prefWidth="356.0" showTickLabels="true" showTickMarks="true" />
+                        <Label layoutX="28.0" layoutY="204.0" text="Padding">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Slider fx:id="sizeSlider" blockIncrement="50.0" layoutX="26.0" layoutY="302.0" majorTickUnit="20.0" max="300.0" min="20.0" prefHeight="16.0" prefWidth="356.0" showTickLabels="true" value="80.0" />
+                        <Label layoutX="30.0" layoutY="274.0" text="Size">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane layoutX="261.0" layoutY="360.0" prefHeight="126.0" prefWidth="121.0">
+                           <children>
+                              <Button layoutX="44.0" layoutY="4.0" mnemonicParsing="false" onAction="#moveUpButtonPressed" prefHeight="32.0" prefWidth="32.0" text="⬆️" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="44.0" layoutY="46.0" mnemonicParsing="false" onAction="#moveCenterButtonPressed" prefHeight="32.0" prefWidth="32.0" text="C" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="5.0" layoutY="46.0" mnemonicParsing="false" onAction="#moveLeftButtonPressed" prefHeight="32.0" prefWidth="32.0" text="◀️" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="84.0" layoutY="45.0" mnemonicParsing="false" onAction="#moveRightButtonPressed" prefHeight="32.0" prefWidth="32.0" text="▶️" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="44.0" layoutY="87.0" mnemonicParsing="false" onAction="#moveDownButtonPressed" prefHeight="32.0" prefWidth="32.0" text="🔽" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="29.0" layoutY="360.0" text="Output Format">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="outputFormat" layoutX="26.0" layoutY="398.0" prefWidth="150.0" promptText="Select a format" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </center>
+         <top>
+            <AnchorPane prefHeight="100.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text layoutX="216.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select your preferred settings:" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </top>
+         <bottom>
+            <VBox prefHeight="50.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="startWatermarkBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="800.0" styleClass="btn-success" text="&gt; Start">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</Pane>

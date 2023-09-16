@@ -1,0 +1,29 @@
+.blue-button {
+    -fx-background-color:
+        linear-gradient(from 0% 0% to 0% 100%, #e0e0e0, #c0c0c0),
+        linear-gradient(#0099cc, #0077a3);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 5, 5;
+    -fx-text-fill: white;
+    -fx-font-size: 23px;
+    -fx-font-weight: bold;
+}
+
+.blue-button:hover {
+    -fx-background-color:
+        linear-gradient(from 0% 0% to 0% 100%, #c0c0c0, #a0a0a0),
+        linear-gradient(#0077a3, #005588);
+}
+
+.blue-button:pressed {
+    -fx-background-color:
+        linear-gradient(from 0% 0% to 0% 100%, #a0a0a0, #808080),
+        linear-gradient(#005588, #003366);
+}
+
+.dashed-border {
+    -fx-border-color: #A47551;
+    -fx-border-width: 3px;
+    -fx-border-style: dashed;
+    -fx-border-radius: 22px;
+}
