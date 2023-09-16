@@ -25,11 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletionService;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DragAndDropController {
     @FXML
@@ -40,6 +36,8 @@ public class DragAndDropController {
     private Button addWaterMarkBtn;
     @FXML
     private ProgressBar unzipProgressBar;
+    @FXML
+    private AnchorPane unzipProgressPane;
 
     public DragAndDropController() {
     }
@@ -90,6 +88,7 @@ public class DragAndDropController {
                     });
             ArrayList<File> zipFiles = files.stream().filter(file -> FilenameUtils.getExtension(file.getName()).equals("zip")).collect(Collectors.toCollection(ArrayList::new));
             if (!zipFiles.isEmpty()) {
+                unzipProgressPane.setVisible(true);
                 Task<Void> batchUnzipTask = new BatchUnzipTask(zipFiles);
                 unzipProgressBar.progressProperty().bind(batchUnzipTask.progressProperty());
                 Launcher.getExecutorService().submit(batchUnzipTask);

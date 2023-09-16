@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 
 import javax.imageio.ImageIO;
@@ -39,15 +40,9 @@ public class WatermarkController {
     private Button previousImgBtn, nextImgBtn, startWatermarkBtn;
     @FXML
     private ProgressBar progressBar;
-
     private Color fontColor;
-
     private int offsetX, offsetY;
-
     private int currentImageIndex;
-    private ExecutorService executorService;
-
-    private Button moveUpBtn, moveDownBtn, moveRightBtn, moveLeftBtn, moveCenterBtn;
 
     @FXML
     public void initialize() {
