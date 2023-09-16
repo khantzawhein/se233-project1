@@ -1,11 +1,12 @@
 package com.se233.photoeditor.controllers.tasks;
 
+import com.se233.photoeditor.Launcher;
 import com.se233.photoeditor.models.ImageFile;
+import com.se233.photoeditor.views.ErrorAlert;
 import com.se233.photoeditor.views.ExportSuccessAlert;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 
 import java.awt.*;
 import java.io.File;
@@ -40,26 +41,34 @@ public class BatchExportWatermarkTask extends Task<Void> {
 
     @Override
     protected Void call() {
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
-        CompletionService<Void> completionService = new ExecutorCompletionService<>(executorService);
-        for (ImageFile imageFile : imageFiles) {
-            completionService.submit(new GenerateWatermarkTask(imageFile, font, watermarkText, outputFormat, outputDir.getAbsolutePath(), color, rotateDeg, fontSize, offsetX, offsetY, paddingX));
+        try {
+            this.work();
+        } catch (InterruptedException e) {
+            Platform.runLater(() -> {
+                ErrorAlert errorAlert = new ErrorAlert(e);
+                errorAlert.showAlert();
+            });
+        }
+        return null;
+    }
+
+    private void work() throws InterruptedException {
+        long startTime = System.currentTimeMillis();
+        CompletionService<Void> completionService = new ExecutorCompletionService<>(Launcher.getExecutorService());
+        for (int i = 0; i < imageFiles.size(); i++) {
+            ImageFile imageFile = imageFiles.get(i);
+            completionService.submit(new GenerateWatermarkTask(imageFile, i, font, watermarkText, outputFormat, outputDir.getAbsolutePath(), color, rotateDeg, fontSize, offsetX, offsetY, paddingX));
 
         }
         for (int i = 0; i < imageFiles.size(); i++) {
-            try {
-                completionService.take();
-                this.updateProgress(i + 1, imageFiles.size());
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            completionService.take();
+            this.updateProgress(i + 1, imageFiles.size());
         }
 
+        long endTime = System.currentTimeMillis();
         Platform.runLater(() -> {
-            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir);
+            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir, endTime - startTime);
             exportSuccessAlert.showAlert();
         });
-        return null;
     }
 }

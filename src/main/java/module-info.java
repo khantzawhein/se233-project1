@@ -8,6 +8,7 @@ module com.se233.photoeditor {
     requires org.apache.commons.io;
     requires java.desktop;
     requires javafx.swing;
+    requires org.apache.commons.compress;
 
     opens com.se233.photoeditor to javafx.fxml;
     opens com.se233.photoeditor.controllers to javafx.fxml;

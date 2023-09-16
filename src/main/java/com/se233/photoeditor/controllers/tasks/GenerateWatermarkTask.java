@@ -1,6 +1,8 @@
 package com.se233.photoeditor.controllers.tasks;
 
 import com.se233.photoeditor.models.ImageFile;
+import com.se233.photoeditor.views.ErrorAlert;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.ComboBox;
 import org.apache.commons.io.FilenameUtils;
@@ -20,8 +22,9 @@ public class GenerateWatermarkTask implements Callable<Void> {
     private int fontSize, offsetX, offsetY, rotateDeg, paddingX;
     private Color color;
     private BufferedImage bufferedImage;
+    private int i;
 
-    public GenerateWatermarkTask(ImageFile imageFile, String font, String watermarkText, String outputFormat, String outputPath,
+    public GenerateWatermarkTask(ImageFile imageFile, int i, String font, String watermarkText, String outputFormat, String outputPath,
                                  Color color, int rotateDeg, int fontSize, int offsetX, int offsetY, int paddingX) {
         this.imageFile = imageFile;
         this.font = font;
@@ -34,15 +37,26 @@ public class GenerateWatermarkTask implements Callable<Void> {
         this.rotateDeg = rotateDeg;
         this.color = color;
         this.outputPath = outputPath;
+        this.i = i;
     }
 
     @Override
-    public Void call() throws Exception {
+    public Void call() {
         try {
-            bufferedImage = ImageIO.read(new File(this.imageFile.getPath()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            this.work();
+        } catch (Exception e) {
+            Platform.runLater(() -> {
+                ErrorAlert errorAlert = new ErrorAlert(e);
+                errorAlert.showAlert();
+            });
         }
+
+        return null;
+    }
+
+    private void work() throws IOException {
+        bufferedImage = ImageIO.read(new File(this.imageFile.getPath()));
+
         double width = bufferedImage.getWidth();
         double height = bufferedImage.getHeight();
 
@@ -60,13 +74,7 @@ public class GenerateWatermarkTask implements Callable<Void> {
         g.rotate(Math.toRadians(this.rotateDeg), x + rotateWidthOffset + this.offsetX, y - rotateHeightOffset + this.offsetY);
         g.setColor(this.color);
         g.drawString(this.watermarkText, (int) x + paddingX + +this.offsetX, (int) y + this.offsetY);
-
-        File file = new File(this.outputPath + "/" + FilenameUtils.getBaseName(this.imageFile.getName()) + "-watermarked." + this.outputFormat.toLowerCase());
-        try {
-            ImageIO.write(bufferedImage, this.outputFormat.toLowerCase(), file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
+        File file = new File(this.outputPath + "/" + FilenameUtils.getBaseName(this.imageFile.getName()) + "-watermarked-" + i + "." + this.outputFormat.toLowerCase());
+        ImageIO.write(bufferedImage, this.outputFormat.toLowerCase(), file);
     }
 }

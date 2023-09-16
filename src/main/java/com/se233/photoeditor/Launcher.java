@@ -2,26 +2,59 @@ package com.se233.photoeditor;
 
 import com.se233.photoeditor.enums.EditMode;
 import com.se233.photoeditor.models.ImageFile;
+import com.se233.photoeditor.views.ErrorAlert;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 public class Launcher extends Application {
     private static Stage stage;
     private static EditMode currentEditMode;
     private static ArrayList<ImageFile> imageFiles;
+
+    private static ExecutorService executorService;
+
     @Override
     public void start(Stage stage) throws Exception {
         imageFiles = new ArrayList<>();
+        executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         Launcher.stage = stage;
         stage.setScene(getDragAndDropScene());
         stage.setTitle("Photo Editor");
         stage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        executorService.shutdown();
+        // Remove Tmp Files
+        this.cleanUpTemp();
+    }
+
+    public void cleanUpTemp() throws IOException {
+        String tmpDir = System.getProperty("java.io.tmpdir") + "photo-editor/unzip/";
+        File tmpFolder = new File(tmpDir);
+        if (tmpFolder.exists()) {
+
+            Stream<Path> walk = Files.walk(tmpFolder.toPath());
+            walk.map(java.nio.file.Path::toFile)
+                    .sorted((o1, o2) -> -o1.compareTo(o2))
+                    .forEach(File::delete);
+
+            walk.close();
+        }
     }
 
     public static Scene getHomeScene() throws IOException {
@@ -66,5 +99,9 @@ public class Launcher extends Application {
 
     public static ArrayList<ImageFile> getImageFiles() {
         return imageFiles;
+    }
+
+    public static ExecutorService getExecutorService() {
+        return executorService;
     }
 }

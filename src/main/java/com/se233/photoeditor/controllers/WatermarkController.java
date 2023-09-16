@@ -52,13 +52,12 @@ public class WatermarkController {
     @FXML
     public void initialize() {
         ArrayList<ImageFile> imageFiles = Launcher.getImageFiles();
-        executorService = Executors.newSingleThreadExecutor();
-        new Thread(() -> {
+        Launcher.getExecutorService().execute(() -> {
             fontPicker.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
             Platform.runLater(() -> {
                 fontPicker.getSelectionModel().select(0);
             });
-        }).start();
+        });
 
         outputFormat.getItems().addAll("JPEG", "PNG");
         outputFormat.getSelectionModel().select(0);
@@ -112,8 +111,7 @@ public class WatermarkController {
                         (int) rotationSlider.getValue(), (int) sizeSlider.getValue(),
                         this.offsetX, this.offsetY,(int) paddingSlider.getValue());
 
-                Thread thread = new Thread(batchExportWatermarkTask);
-                thread.start();
+                Launcher.getExecutorService().submit(batchExportWatermarkTask);
 
                 progressBar.progressProperty().bind(batchExportWatermarkTask.progressProperty());
             }
@@ -125,7 +123,7 @@ public class WatermarkController {
     }
 
     private void updatePreviewOnBackground() {
-        executorService.execute(this::updatePreview);
+        Launcher.getExecutorService().execute(this::updatePreview);
     }
 
     private void updatePreview() {

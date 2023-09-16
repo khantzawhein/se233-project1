@@ -10,11 +10,11 @@ public class ExportSuccessAlert extends Alert {
     private final ButtonType buttonTypeOne;
     private final File outputDir;
 
-    public ExportSuccessAlert(File outputDir) {
+    public ExportSuccessAlert(File outputDir, long timeElasped) {
         super(AlertType.INFORMATION);
         this.setTitle("Success");
         this.setHeaderText("Task Completed Successfully");
-        this.setContentText("Watermarked images has been exported to destination folder successfully!");
+        this.setContentText("Watermarked images has been exported to destination folder successfully!\n\nTime Elapsed: " + timeElasped/1000 + "s");
         this.outputDir = outputDir;
         // Add button open folder to alert
         buttonTypeOne = new ButtonType("Show Folder");
