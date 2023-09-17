@@ -16,12 +16,13 @@ import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutorCompletionService;
 
 public class BatchExportResizeTask extends Task<Void> {
-    private ArrayList<ImageFile> imageFiles;
-    private String outputFormat;
-    private File outputDir;
-    private Color imageBackgroundColor;
-    private int x, imgQuality;
-    private ResizeEditMode resizeEditMode;
+    private final ArrayList<ImageFile> imageFiles;
+    private final String outputFormat;
+    private final File outputDir;
+    private final Color imageBackgroundColor;
+    private final int x;
+    private final int imgQuality;
+    private final ResizeEditMode resizeEditMode;
 
     public BatchExportResizeTask(ArrayList<ImageFile> imageFiles, ResizeEditMode resizeEditMode, int x, String outputFormat, File outputDir, int imgQuality, Color imageBackgroundColor) {
         this.resizeEditMode = resizeEditMode;
@@ -60,7 +61,7 @@ public class BatchExportResizeTask extends Task<Void> {
 
         long endTime = System.currentTimeMillis();
         Platform.runLater(() -> {
-            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir, endTime - startTime);
+            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir, "Resized images has been exported to destination folder successfully!", endTime - startTime);
             exportSuccessAlert.showAlert();
         });
     }

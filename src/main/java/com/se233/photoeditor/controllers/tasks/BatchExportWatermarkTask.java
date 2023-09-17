@@ -67,7 +67,7 @@ public class BatchExportWatermarkTask extends Task<Void> {
 
         long endTime = System.currentTimeMillis();
         Platform.runLater(() -> {
-            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir, endTime - startTime);
+            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir, "Watermarked images has been exported to destination folder successfully!", endTime - startTime);
             exportSuccessAlert.showAlert();
         });
     }

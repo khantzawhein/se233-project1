@@ -18,12 +18,11 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public class GenerateResizeTask implements Callable<Void> {
-    private ImageFile imageFile;
-    private int i, x, imgQuality;
-    private ResizeEditMode resizeEditMode;
-    private String outputFormat, outputPath;
-    private Color imageBackgroundColor;
-    private BufferedImage bufferedImage;
+    private final ImageFile imageFile;
+    private final int i, x, imgQuality;
+    private final ResizeEditMode resizeEditMode;
+    private final String outputFormat, outputPath;
+    private final Color imageBackgroundColor;
 
     public GenerateResizeTask(ImageFile imageFile, int i, ResizeEditMode resizeEditMode, int x, String outputFormat, String outputPath, int imgQuality, Color imageBackgroundColor) {
         this.imageFile = imageFile;
@@ -37,7 +36,7 @@ public class GenerateResizeTask implements Callable<Void> {
     }
 
     @Override
-    public Void call() throws Exception {
+    public Void call() {
         try {
             this.work();
         } catch (Exception e) {
@@ -51,7 +50,7 @@ public class GenerateResizeTask implements Callable<Void> {
     }
 
     private void work() throws IOException {
-        bufferedImage = ImageIO.read(new File(this.imageFile.getPath()));
+        BufferedImage bufferedImage = ImageIO.read(new File(this.imageFile.getPath()));
         if (resizeEditMode == ResizeEditMode.WIDTH) {
             bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_WIDTH, x);
         } else if (resizeEditMode == ResizeEditMode.HEIGHT) {
@@ -65,20 +64,19 @@ public class GenerateResizeTask implements Callable<Void> {
         imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
         imageWriteParam.setCompressionQuality(this.imgQuality / 100.0f);
 
-        BufferedImage localBufferImage = null;
+        BufferedImage newBufferedImage;
         if (FilenameUtils.getExtension(this.imageFile.getName()).equalsIgnoreCase("png")) {
-            localBufferImage = new BufferedImage(this.bufferedImage.getWidth(), this.bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-            Graphics2D graphics = localBufferImage.createGraphics();
+            newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = newBufferedImage.createGraphics();
             graphics.setColor(this.imageBackgroundColor);
-            graphics.fillRect(0, 0, localBufferImage.getWidth(), localBufferImage.getHeight());
-            graphics.drawImage(this.bufferedImage, 0, 0, null);
+            graphics.fillRect(0, 0, newBufferedImage.getWidth(), newBufferedImage.getHeight());
+            graphics.drawImage(bufferedImage, 0, 0, null);
         } else {
-            localBufferImage = this.bufferedImage;
+            newBufferedImage = bufferedImage;
         }
-        IIOImage iioImage = new IIOImage(localBufferImage, null, null);
-        // overwrite image if exists
+        IIOImage iioImage = new IIOImage(newBufferedImage, null, null);
         if (file.exists()) {
-            System.out.println(file.delete());
+            file.delete();
         }
         imageWriter.setOutput(ImageIO.createImageOutputStream(file));
         imageWriter.write(null, iioImage, imageWriteParam);

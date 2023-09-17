@@ -89,7 +89,7 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="widthField" prefHeight="30.0" prefWidth="38.0" />
+                        <TextField fx:id="widthField" prefHeight="30.0" prefWidth="38.0" text="200" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  pixels." wrappingWidth="98.61249923706055">
                            <font>
                               <Font size="15.0" />
@@ -113,7 +113,7 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="heightField" prefHeight="30.0" prefWidth="45.0" />
+                        <TextField fx:id="heightField" prefHeight="30.0" prefWidth="45.0" text="200" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  pixels." wrappingWidth="98.61249923706055">
                            <font>
                               <Font size="15.0" />
@@ -137,7 +137,7 @@
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="percentageField" prefHeight="30.0" prefWidth="38.0" />
+                        <TextField fx:id="percentageField" prefHeight="30.0" prefWidth="38.0" text="80" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  % of the original dimension" wrappingWidth="226.61249923706055">
                            <font>
                               <Font size="15.0" />
