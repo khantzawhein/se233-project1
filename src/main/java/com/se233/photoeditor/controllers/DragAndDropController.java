@@ -33,7 +33,7 @@ public class DragAndDropController {
     @FXML
     private Text dropLabel;
     @FXML
-    private Button addWaterMarkBtn;
+    private Button addWaterMarkBtn, resizeBtn;
     @FXML
     private ProgressBar unzipProgressBar;
     @FXML
@@ -97,6 +97,14 @@ public class DragAndDropController {
         addWaterMarkBtn.setOnAction(event -> {
             try {
                 Launcher.getStage().setScene(Launcher.getWatermarkScene());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        resizeBtn.setOnAction(event -> {
+            try {
+                Launcher.getStage().setScene(Launcher.getResizeScene());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

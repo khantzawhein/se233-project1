@@ -47,7 +47,8 @@ public class UnzipTask implements Callable<ArrayList<File>> {
 
     private ArrayList<File> work() throws IOException {
         ArrayList<File> fileArrayList = new ArrayList<>();
-        String tmpDir = System.getProperty("java.io.tmpdir") + "photo-editor/unzip/" + zipFile.getName().replace(".zip", "") + "/";
+        String tmpDir = System.getProperty("java.io.tmpdir") + "photo-editor/unzip/"
+                + zipFile.getName().replace(".zip", "") + "/";
         // If Exists delete folder
         Path tmpPath = Paths.get(tmpDir);
         if (Files.exists(tmpPath)) {
@@ -75,9 +76,7 @@ public class UnzipTask implements Callable<ArrayList<File>> {
                 fileArrayList.add(file);
                 Files.copy(archiveInputStream, path);
             }
-
         }
-
         return fileArrayList;
     }
 }

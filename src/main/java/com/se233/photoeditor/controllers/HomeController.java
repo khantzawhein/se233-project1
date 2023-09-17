@@ -1,7 +1,7 @@
 package com.se233.photoeditor.controllers;
 
 import com.se233.photoeditor.Launcher;
-import com.se233.photoeditor.enums.EditMode;
+import com.se233.photoeditor.enums.ResizeEditMode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -18,7 +18,6 @@ public class HomeController {
 
         watermarkBtn.setOnAction(e -> {
             try {
-                Launcher.setCurrentEditMode(EditMode.WATERMARK);
                 Launcher.getStage().setScene(Launcher.getDragAndDropScene());
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -27,7 +26,6 @@ public class HomeController {
 
         resizeBtn.setOnAction(e -> {
             try {
-                Launcher.setCurrentEditMode(EditMode.RESIZE);
                 Launcher.getStage().setScene(Launcher.getDragAndDropScene());
             } catch (IOException ex) {
                 ex.printStackTrace();

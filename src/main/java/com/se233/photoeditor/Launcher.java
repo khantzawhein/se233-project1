@@ -1,8 +1,7 @@
 package com.se233.photoeditor;
 
-import com.se233.photoeditor.enums.EditMode;
+import com.se233.photoeditor.enums.ResizeEditMode;
 import com.se233.photoeditor.models.ImageFile;
-import com.se233.photoeditor.views.ErrorAlert;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,7 +19,7 @@ import java.util.stream.Stream;
 
 public class Launcher extends Application {
     private static Stage stage;
-    private static EditMode currentEditMode;
+    private static ResizeEditMode currentEditMode;
     private static ArrayList<ImageFile> imageFiles;
 
     private static ExecutorService executorService;
@@ -81,6 +80,14 @@ public class Launcher extends Application {
         return scene;
     }
 
+    public static Scene getResizeScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("resize.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add(Launcher.class.getResource("assets/css/style.css").toExternalForm());
+        return scene;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -89,11 +96,11 @@ public class Launcher extends Application {
         return stage;
     }
 
-    public static EditMode getCurrentEditMode() {
+    public static ResizeEditMode getCurrentEditMode() {
         return currentEditMode;
     }
 
-    public static void setCurrentEditMode(EditMode currentEditMode) {
+    public static void setCurrentEditMode(ResizeEditMode currentEditMode) {
         Launcher.currentEditMode = currentEditMode;
     }
 
