@@ -4,6 +4,7 @@ import com.se233.photoeditor.Launcher;
 import com.se233.photoeditor.controllers.tasks.BatchExportWatermarkTask;
 import com.se233.photoeditor.models.ImageFile;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -46,7 +47,7 @@ public class WatermarkController {
 
     @FXML
     public void initialize() {
-        ArrayList<ImageFile> imageFiles = Launcher.getImageFiles();
+        ObservableList<ImageFile> imageFiles = Launcher.getImageFiles();
         Launcher.getExecutorService().execute(() -> {
             fontPicker.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
             Platform.runLater(() -> {

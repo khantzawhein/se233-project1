@@ -5,6 +5,7 @@ import com.se233.photoeditor.models.ImageFile;
 import com.se233.photoeditor.views.ErrorAlert;
 import com.se233.photoeditor.views.ExportSuccessAlert;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.concurrent.*;
 
 public class BatchExportWatermarkTask extends Task<Void> {
-    private ArrayList<ImageFile> imageFiles;
+    private ObservableList<ImageFile> imageFiles;
     private String font;
     private String outputFormat, watermarkText;
     private int fontSize, offsetX, offsetY, rotateDeg, paddingX;
@@ -22,7 +23,7 @@ public class BatchExportWatermarkTask extends Task<Void> {
 
     private File outputDir;
 
-    public BatchExportWatermarkTask(ArrayList<ImageFile> imageFiles, File outputDir, String font,
+    public BatchExportWatermarkTask(ObservableList<ImageFile> imageFiles, File outputDir, String font,
                                     String watermarkText, String outputFormat, Color color,
                                     int rotateDeg,
                                     int fontSize, int offsetX, int offsetY, int paddingX) {

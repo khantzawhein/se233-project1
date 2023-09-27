@@ -6,6 +6,7 @@ import com.se233.photoeditor.models.ImageFile;
 import com.se233.photoeditor.views.ErrorAlert;
 import com.se233.photoeditor.views.ExportSuccessAlert;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutorCompletionService;
 
 public class BatchExportResizeTask extends Task<Void> {
-    private final ArrayList<ImageFile> imageFiles;
+    private final ObservableList<ImageFile> imageFiles;
     private final String outputFormat;
     private final File outputDir;
     private final Color imageBackgroundColor;
@@ -24,7 +25,7 @@ public class BatchExportResizeTask extends Task<Void> {
     private final int imgQuality;
     private final ResizeEditMode resizeEditMode;
 
-    public BatchExportResizeTask(ArrayList<ImageFile> imageFiles, ResizeEditMode resizeEditMode, int x, String outputFormat, File outputDir, int imgQuality, Color imageBackgroundColor) {
+    public BatchExportResizeTask(ObservableList<ImageFile> imageFiles, ResizeEditMode resizeEditMode, int x, String outputFormat, File outputDir, int imgQuality, Color imageBackgroundColor) {
         this.resizeEditMode = resizeEditMode;
         this.imageFiles = imageFiles;
         this.x = x;

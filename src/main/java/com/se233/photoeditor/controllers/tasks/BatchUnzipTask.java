@@ -5,6 +5,7 @@ import com.se233.photoeditor.models.ImageFile;
 import com.se233.photoeditor.views.ErrorAlert;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.layout.VBox;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class BatchUnzipTask extends Task<Void> {
+public class BatchUnzipTask extends Task<ArrayList<ImageFile>> {
 
     private ArrayList<File> zipFiles;
 
@@ -28,9 +29,9 @@ public class BatchUnzipTask extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws Exception {
+    protected ArrayList<ImageFile> call() {
         try {
-            this.work();
+            return this.work();
         } catch (Exception e) {
             Platform.runLater(() -> {
                 ErrorAlert errorAlert = new ErrorAlert(e);
@@ -40,7 +41,7 @@ public class BatchUnzipTask extends Task<Void> {
         return null;
     }
 
-    private void work() throws InterruptedException, ExecutionException {
+    private ArrayList<ImageFile> work() throws InterruptedException, ExecutionException {
         ArrayList<ArrayList<File>> allFiles = new ArrayList<>();
         CompletionService<ArrayList<File>> completionService = new ExecutorCompletionService<>(Launcher.getExecutorService());
         for (File file : zipFiles) {
@@ -69,5 +70,9 @@ public class BatchUnzipTask extends Task<Void> {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         Launcher.getImageFiles().addAll(imageFiles);
+
+        return imageFiles;
+
+
     }
 }

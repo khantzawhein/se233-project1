@@ -2,19 +2,22 @@ package com.se233.photoeditor.controllers;
 
 import com.se233.photoeditor.Launcher;
 import com.se233.photoeditor.controllers.tasks.BatchUnzipTask;
-import com.se233.photoeditor.controllers.tasks.UnzipTask;
 import com.se233.photoeditor.models.ImageFile;
+import com.se233.photoeditor.views.ImageFileItemPane;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.apache.commons.io.FilenameUtils;
@@ -29,7 +32,7 @@ import java.util.stream.Collectors;
 
 public class DragAndDropController {
     @FXML
-    private AnchorPane dropArea;
+    private StackPane dropArea;
     @FXML
     private Text dropLabel;
     @FXML
@@ -38,6 +41,8 @@ public class DragAndDropController {
     private ProgressBar unzipProgressBar;
     @FXML
     private AnchorPane unzipProgressPane;
+    @FXML
+    private Pane imageFileListScrollPane;
 
     public DragAndDropController() {
     }
@@ -74,26 +79,7 @@ public class DragAndDropController {
         dropArea.setOnDragExited(event -> {
             dropArea.setStyle(null);
         });
-        dropArea.setOnDragDropped(event -> {
-            List<File> files = event.getDragboard().getFiles();
-            files.stream().filter(file -> !FilenameUtils.getExtension(file.getName()).equals("zip"))
-                    .forEach(file -> {
-                        try {
-                            ImageFile imageFile = new ImageFile(file.getName(), file.getPath(),
-                                    FilenameUtils.getExtension(file.getName()), Files.size(Path.of(file.getPath())));
-                            Launcher.getImageFiles().add(imageFile);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-            ArrayList<File> zipFiles = files.stream().filter(file -> FilenameUtils.getExtension(file.getName()).equals("zip")).collect(Collectors.toCollection(ArrayList::new));
-            if (!zipFiles.isEmpty()) {
-                unzipProgressPane.setVisible(true);
-                Task<Void> batchUnzipTask = new BatchUnzipTask(zipFiles);
-                unzipProgressBar.progressProperty().bind(batchUnzipTask.progressProperty());
-                Launcher.getExecutorService().submit(batchUnzipTask);
-            }
-        });
+        dropArea.setOnDragDropped(this::handleDragDropped);
         addWaterMarkBtn.setOnAction(event -> {
             try {
                 Launcher.getStage().setScene(Launcher.getWatermarkScene());
@@ -110,5 +96,51 @@ public class DragAndDropController {
             }
         });
     }
+
+    private void handleDragDropped(DragEvent event) {
+        List<File> files = event.getDragboard().getFiles();
+        files.stream().filter(file -> !FilenameUtils.getExtension(file.getName()).equals("zip"))
+                .forEach(file -> {
+                    try {
+                        ImageFile imageFile = new ImageFile(file.getName(), file.getPath(),
+                                FilenameUtils.getExtension(file.getName()), Files.size(Path.of(file.getPath())));
+                        Launcher.getImageFiles().add(imageFile);
+                        updateFileItemUI(imageFile);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        ArrayList<File> zipFiles = files.stream().filter(file -> FilenameUtils.getExtension(file.getName()).equals("zip")).collect(Collectors.toCollection(ArrayList::new));
+        if (!zipFiles.isEmpty()) {
+            unzipProgressPane.setVisible(true);
+            Task<ArrayList<ImageFile>> batchUnzipTask = new BatchUnzipTask(zipFiles);
+            unzipProgressBar.progressProperty().bind(batchUnzipTask.progressProperty());
+            Launcher.getExecutorService().submit(batchUnzipTask);
+            batchUnzipTask.setOnSucceeded(event1 -> {
+                unzipProgressPane.setVisible(false);
+                ArrayList<ImageFile> imageFiles = (ArrayList<ImageFile>) event1.getSource().getValue();
+                imageFiles.forEach(this::updateFileItemUI);
+            });
+        }
+        addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());
+        resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
+    }
+
+    public void updateFileItemUI(ImageFile imageFile) {
+        try {
+            ImageFileItemPane imageFileItemPane = new ImageFileItemPane(imageFile);
+            imageFileItemPane.setDeleteHandler(event -> {
+                Launcher.getImageFiles().remove(imageFile);
+                addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());
+                resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
+                Launcher.getImageFiles().remove(imageFile);
+                imageFileListScrollPane.getChildren().remove(imageFileItemPane.getImageFileItemPane());
+            });
+            imageFileListScrollPane.getChildren().add(imageFileItemPane.getImageFileItemPane());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

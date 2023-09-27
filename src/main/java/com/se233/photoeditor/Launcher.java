@@ -3,6 +3,8 @@ package com.se233.photoeditor;
 import com.se233.photoeditor.enums.ResizeEditMode;
 import com.se233.photoeditor.models.ImageFile;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,13 +22,12 @@ import java.util.stream.Stream;
 public class Launcher extends Application {
     private static Stage stage;
     private static ResizeEditMode currentEditMode;
-    private static ArrayList<ImageFile> imageFiles;
-
+    private static ObservableList<ImageFile> imageFiles;
     private static ExecutorService executorService;
 
     @Override
     public void start(Stage stage) throws Exception {
-        imageFiles = new ArrayList<>();
+        imageFiles = FXCollections.observableList(new ArrayList<>());
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         Launcher.stage = stage;
         stage.setScene(getDragAndDropScene());
@@ -104,7 +105,7 @@ public class Launcher extends Application {
         Launcher.currentEditMode = currentEditMode;
     }
 
-    public static ArrayList<ImageFile> getImageFiles() {
+    public static ObservableList<ImageFile> getImageFiles() {
         return imageFiles;
     }
 
