@@ -19,9 +19,7 @@ public class ImageFileItemPane {
     public ImageFileItemPane(ImageFile imageFile) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("image-file-pane.fxml"));
         this.imageFileItemPane = fxmlLoader.load();
-        System.out.println(imageFileItemPane.getChildren());
         for (Node node : imageFileItemPane.getChildren()) {
-            System.out.println(node.getId());
             if (node instanceof Text && node.getId().equals("filename")) {
                 ((Text) node).setText(imageFile.getName());
             } else if (node instanceof Text && node.getId().equals("filesize")) {

@@ -120,6 +120,8 @@ public class DragAndDropController {
                 unzipProgressPane.setVisible(false);
                 ArrayList<ImageFile> imageFiles = (ArrayList<ImageFile>) event1.getSource().getValue();
                 imageFiles.forEach(this::updateFileItemUI);
+                addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());
+                resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
             });
         }
         addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());

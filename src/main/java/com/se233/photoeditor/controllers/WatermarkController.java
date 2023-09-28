@@ -34,7 +34,7 @@ public class WatermarkController {
     @FXML
     private ComboBox<String> fontPicker, outputFormat;
     @FXML
-    private Slider rotationSlider, paddingSlider, sizeSlider;
+    private Slider rotationSlider, paddingSlider, sizeSlider, visibilitySlider;
     @FXML
     private ImageView previewImageView;
     @FXML
@@ -76,6 +76,10 @@ public class WatermarkController {
         });
 
         rotationSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            updatePreviewOnBackground();
+        });
+
+        visibilitySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             updatePreviewOnBackground();
         });
 
@@ -144,7 +148,7 @@ public class WatermarkController {
         double rotateWidthOffset = (double) fontMetrics.stringWidth(watermarkText.getText()) / 2;
         double rotateHeightOffset = (double) fontMetrics.getHeight() / 2;
         int paddingX = (int) paddingSlider.getValue() * 2;
-        this.fontColor = new Color((int) (colorPicker.getValue().getRed() * 255), (int) (colorPicker.getValue().getGreen() * 255), (int) (colorPicker.getValue().getBlue() * 255));
+        this.fontColor = new Color((int) (colorPicker.getValue().getRed() * 255), (int) (colorPicker.getValue().getGreen() * 255), (int) (colorPicker.getValue().getBlue() * 255), (int) ((visibilitySlider.getValue() / 100.0) * 255));
 
         g.setFont(font);
         g.rotate(Math.toRadians(rotationSlider.getValue()), x + rotateWidthOffset + this.offsetX, y - rotateHeightOffset + this.offsetY);
