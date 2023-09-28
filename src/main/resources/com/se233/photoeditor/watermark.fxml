@@ -134,7 +134,7 @@
          <bottom>
             <VBox prefHeight="50.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="startWatermarkBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="800.0" styleClass="btn-success" text="&gt; Start">
+                  <Button fx:id="startWatermarkBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #2EA390; -fx-text-fill: white;" text="&gt; Start">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
