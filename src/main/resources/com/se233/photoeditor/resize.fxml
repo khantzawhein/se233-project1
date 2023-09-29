@@ -10,37 +10,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.se233.photoeditor.controllers.ResizeController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FEF9F6;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.se233.photoeditor.controllers.ResizeController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane layoutX="31.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <VBox layoutX="11.0" layoutY="68.0" prefHeight="89.0" prefWidth="178.0" spacing="6.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#changeToPercentagePane" prefHeight="41.0" prefWidth="178.0" style="-fx-background-color: #A47551;" text="Percentage" textFill="WHITE">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#changeToWidthPane" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #A47551;" text="Width" textFill="WHITE">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#changeToHeightPane" prefHeight="20.0" prefWidth="178.0" style="-fx-background-color: #A47551;" text="Height" textFill="WHITE">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
+            <Button layoutX="11.0" layoutY="24.0" mnemonicParsing="false" onAction="#changeToPercentagePane" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #A47551;" text="Percentage" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="11.0" layoutY="122.0" mnemonicParsing="false" onAction="#changeToWidthPane" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #A47551;" text="Width" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="11.0" layoutY="73.0" mnemonicParsing="false" onAction="#changeToHeightPane" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #A47551;" text="Height" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="194.0" layoutY="136.0" prefHeight="427.0" prefWidth="637.0">
+      <AnchorPane layoutX="256.0" layoutY="147.0" prefHeight="418.0" prefWidth="496.0">
          <children>
             <ProgressBar fx:id="progressBar" layoutX="18.0" layoutY="288.0" prefWidth="200.0" progress="0.0" />
             <ComboBox fx:id="outputFormat" layoutX="15.0" layoutY="60.0" prefHeight="27.0" prefWidth="309.0" />
@@ -55,7 +49,7 @@
                </font>
             </Label>
             <Slider fx:id="imageQualitySlider" layoutX="18.0" layoutY="209.0" majorTickUnit="5.0" min="25.0" prefHeight="15.0" prefWidth="310.0" showTickLabels="true" value="80.0" />
-            <Button fx:id="startBtn" layoutX="17.0" layoutY="344.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" style="-fx-background-color: #2EA390;" text="START" textFill="WHITE">
+            <Button fx:id="startBtn" layoutX="17.0" layoutY="344.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="99.0" style="-fx-background-color: #C0875B;" text="Apply" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.800000190734863" />
                </font>
@@ -71,49 +65,30 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+            <Button fx:id="backBtn" layoutX="127.0" layoutY="344.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #DFA878; -fx-text-fill: white;" styleClass="#DFA878" text="Back">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <StackPane alignment="TOP_RIGHT" layoutX="200.0" prefHeight="131.0" prefWidth="601.0">
+      <StackPane alignment="TOP_RIGHT" layoutX="262.0" layoutY="60.0" prefHeight="109.0" prefWidth="457.0">
          <children>
-            <AnchorPane fx:id="widthResizePane" prefHeight="600.0" prefWidth="600.0" visible="false">
+            <AnchorPane fx:id="heightResizePane" visible="false">
                <children>
-                  <Text layoutX="11.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width" wrappingWidth="134.01252365112305">
+                  <Text layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height" wrappingWidth="134.01252365112305">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Text>
-                  <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="112.0" prefHeight="37.0" prefWidth="336.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Make the width of images" wrappingWidth="182.01252365112305">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="widthField" prefHeight="30.0" prefWidth="38.0" text="200" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  pixels." wrappingWidth="98.61249923706055">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="heightResizePane" prefHeight="600.0" prefWidth="600.0" visible="false">
-               <children>
-                  <Text layoutX="11.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height" wrappingWidth="134.01252365112305">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Text>
-                  <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="112.0" prefHeight="37.0" prefWidth="336.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="55.0" prefHeight="37.0" prefWidth="336.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Make the height of images" wrappingWidth="181.01252365112305">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="heightField" prefHeight="30.0" prefWidth="45.0" text="200" />
+                        <TextField fx:id="heightField" prefHeight="37.0" prefWidth="57.0" text="200" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  pixels." wrappingWidth="98.61249923706055">
                            <font>
                               <Font size="15.0" />
@@ -123,21 +98,45 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="percentageResizePane" prefHeight="600.0" prefWidth="601.0">
+            <AnchorPane fx:id="widthResizePane" visible="false">
                <children>
-                  <Text layoutX="11.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Percentage" wrappingWidth="134.01252365112305">
+                  <Text layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width" wrappingWidth="134.01252365112305">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Text>
-                  <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="112.0" prefHeight="37.0" prefWidth="401.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="57.0" prefHeight="37.0" prefWidth="336.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Make the width of images" wrappingWidth="182.01252365112305">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="widthField" prefHeight="43.0" prefWidth="57.0" text="200" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  pixels." wrappingWidth="98.61249923706055">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="percentageResizePane" prefHeight="100.0" prefWidth="457.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Percentage" wrappingWidth="134.01252365112305">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="56.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Scale images to " wrappingWidth="118.01252365112305">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="percentageField" prefHeight="30.0" prefWidth="38.0" text="80" />
+                        <TextField fx:id="percentageField" prefHeight="30.0" prefWidth="57.0" text="80" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  % of the original dimension" wrappingWidth="226.61249923706055">
                            <font>
                               <Font size="15.0" />
@@ -149,5 +148,10 @@
             </AnchorPane>
          </children>
       </StackPane>
+      <Text layoutX="15.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="cookie-font" text="Potato and French Fry" wrappingWidth="220.6339988708496">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

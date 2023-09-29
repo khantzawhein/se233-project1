@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
@@ -55,14 +56,6 @@ public class Launcher extends Application {
 
             walk.close();
         }
-    }
-
-    public static Scene getHomeScene() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("home.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        scene.getStylesheets().add(Launcher.class.getResource("assets/css/style.css").toExternalForm());
-        return scene;
     }
 
     public static Scene getDragAndDropScene() throws IOException {

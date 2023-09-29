@@ -13,12 +13,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.se233.photoeditor.controllers.WatermarkController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #FEF9F6;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.se233.photoeditor.controllers.WatermarkController">
    <children>
       <BorderPane prefHeight="700.0" prefWidth="800.0">
          <center>
@@ -76,7 +75,7 @@
                         </Label>
                         <AnchorPane layoutX="261.0" layoutY="414.0" prefHeight="126.0" prefWidth="121.0">
                            <children>
-                              <Button layoutX="44.0" layoutY="4.0" mnemonicParsing="false" onAction="#moveUpButtonPressed" prefHeight="32.0" prefWidth="32.0" text="⬆️" textAlignment="CENTER">
+                              <Button layoutX="44.0" layoutY="4.0" mnemonicParsing="false" onAction="#moveUpButtonPressed" prefHeight="32.0" prefWidth="32.0" text="U" textAlignment="CENTER">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -86,17 +85,17 @@
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="5.0" layoutY="46.0" mnemonicParsing="false" onAction="#moveLeftButtonPressed" prefHeight="32.0" prefWidth="32.0" text="◀️" textAlignment="CENTER">
+                              <Button layoutX="5.0" layoutY="46.0" mnemonicParsing="false" onAction="#moveLeftButtonPressed" prefHeight="32.0" prefWidth="32.0" text="R" textAlignment="CENTER">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="84.0" layoutY="45.0" mnemonicParsing="false" onAction="#moveRightButtonPressed" prefHeight="32.0" prefWidth="32.0" text="▶️" textAlignment="CENTER">
+                              <Button layoutX="84.0" layoutY="45.0" mnemonicParsing="false" onAction="#moveRightButtonPressed" prefHeight="32.0" prefWidth="32.0" text="L" textAlignment="CENTER">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="44.0" layoutY="87.0" mnemonicParsing="false" onAction="#moveDownButtonPressed" prefHeight="32.0" prefWidth="32.0" text="🔽" textAlignment="CENTER">
+                              <Button layoutX="44.0" layoutY="87.0" mnemonicParsing="false" onAction="#moveDownButtonPressed" prefHeight="32.0" prefWidth="32.0" text="D" textAlignment="CENTER">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -115,6 +114,16 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
+                        <Button fx:id="startWatermarkBtn" layoutX="26.0" layoutY="511.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #C0875B; -fx-text-fill: white;" text="Apply">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="backBtn" layoutX="130.0" layoutY="511.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #DFA878; -fx-text-fill: white;" styleClass="#DFA878" text="Back">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                </children>
@@ -123,25 +132,19 @@
          <top>
             <AnchorPane prefHeight="100.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text layoutX="216.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select your preferred settings:" textAlignment="CENTER">
+                  <Text layoutX="227.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select your preferred settings:" textAlignment="CENTER">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="17.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="cookie-font" text="Potato and French Fry" wrappingWidth="220.6339988708496">
+                     <font>
+                        <Font size="20.0" />
                      </font>
                   </Text>
                </children>
             </AnchorPane>
          </top>
-         <bottom>
-            <VBox prefHeight="50.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="startWatermarkBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #2EA390; -fx-text-fill: white;" text="&gt; Start">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-         </bottom>
       </BorderPane>
    </children>
 </Pane>

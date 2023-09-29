@@ -16,6 +16,7 @@ import javafx.stage.DirectoryChooser;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class ResizeController {
     @FXML
@@ -25,7 +26,7 @@ public class ResizeController {
     @FXML
     private ComboBox<String> outputFormat;
     @FXML
-    private Button startBtn;
+    private Button startBtn, backBtn;
     @FXML
     private ProgressBar progressBar;
     @FXML
@@ -54,6 +55,13 @@ public class ResizeController {
                 Task<Void> batchExportResizeTask = new BatchExportResizeTask(Launcher.getImageFiles(), this.currentEditMode, x, outputFormat.getSelectionModel().getSelectedItem(), selectedDirectory, (int) imageQualitySlider.getValue(), color);
                 Launcher.getExecutorService().submit(batchExportResizeTask);
                 progressBar.progressProperty().bind(batchExportResizeTask.progressProperty());
+            }
+        });
+        this.backBtn.setOnAction(event -> {
+            try {
+                Launcher.getStage().setScene(Launcher.getDragAndDropScene());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
     }

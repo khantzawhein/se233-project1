@@ -7,21 +7,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-
- <AnchorPane prefHeight="50.0" prefWidth="730.0" style="-fx-border-style: solid; -fx-border-width: 0px 0px 1px 0px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="50.0" prefWidth="360.0" style="-fx-border-style: solid; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #A47551;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
      <children>
          <ImageView fitHeight="33.0" fitWidth="30.0" layoutX="14.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
              <image>
                  <Image url="@assets/images/image-file-icon.png" />
              </image>
          </ImageView>
-         <Text fx:id="filename" layoutX="64.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="image.jpg" wrappingWidth="307.28271484375" />
-         <Hyperlink fx:id="deleteBtn" layoutX="691.0" layoutY="3.0" prefHeight="17.0" prefWidth="19.0" text="X" textAlignment="CENTER">
+         <Text fx:id="filename" layoutX="52.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="image.jpg" wrappingWidth="110.28271484375" />
+         <Hyperlink fx:id="deleteBtn" layoutX="336.0" layoutY="2.0" prefHeight="17.0" prefWidth="10.0" style="-fx-border-color: transparent; -fx-padding: 0;" text="X" textAlignment="CENTER" textFill="#908d8d">
              <font>
-                 <Font name="System Bold" size="12.0" />
+                 <Font name="System Bold" size="11.0" />
              </font>
          </Hyperlink>
-         <Text fx:id="filesize" layoutX="563.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size: 1 MB" wrappingWidth="109.28271484375" />
+         <Text fx:id="filesize" layoutX="212.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size: 1 MB" wrappingWidth="102.28271484375" />
      </children>
  </AnchorPane>

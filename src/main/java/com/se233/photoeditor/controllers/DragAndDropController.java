@@ -36,13 +36,15 @@ public class DragAndDropController {
     @FXML
     private Text dropLabel;
     @FXML
-    private Button addWaterMarkBtn, resizeBtn;
+    private Button addWaterMarkBtn, resizeBtn, exitBtn;
     @FXML
     private ProgressBar unzipProgressBar;
     @FXML
     private AnchorPane unzipProgressPane;
     @FXML
     private Pane imageFileListScrollPane;
+    @FXML
+    private Text fileListLabel;
 
     public DragAndDropController() {
     }
@@ -95,6 +97,13 @@ public class DragAndDropController {
                 throw new RuntimeException(e);
             }
         });
+
+        exitBtn.setOnAction(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
+        updateAllFilesUI();
     }
 
     private void handleDragDropped(DragEvent event) {
@@ -124,11 +133,14 @@ public class DragAndDropController {
                 resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
             });
         }
-        addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());
-        resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
+    }
+
+    public void updateAllFilesUI() {
+        Launcher.getImageFiles().forEach(this::updateFileItemUI);
     }
 
     public void updateFileItemUI(ImageFile imageFile) {
+        System.out.println(imageFile);
         try {
             ImageFileItemPane imageFileItemPane = new ImageFileItemPane(imageFile);
             imageFileItemPane.setDeleteHandler(event -> {
@@ -138,7 +150,12 @@ public class DragAndDropController {
                 Launcher.getImageFiles().remove(imageFile);
                 imageFileListScrollPane.getChildren().remove(imageFileItemPane.getImageFileItemPane());
             });
+            System.out.println(imageFileItemPane.getImageFileItemPane());
             imageFileListScrollPane.getChildren().add(imageFileItemPane.getImageFileItemPane());
+            addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());
+            resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
+            fileListLabel.setVisible(Launcher.getImageFiles().isEmpty());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

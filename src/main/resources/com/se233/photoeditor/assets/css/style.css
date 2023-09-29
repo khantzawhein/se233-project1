@@ -1,3 +1,21 @@
+@font-face {
+    font-family: Satoshi, sans-serif;
+    font-weight: normal;
+    src: url("../fonts/Satoshi-Regular.otf");
+}
+@font-face {
+    font-family: Satoshi, sans-serif;
+    font-weight: bold;
+    src: url("../fonts/Satoshi-Bold.otf");
+}
+
+@font-face {
+    font-family: Cookie, sans-serif;
+    font-weight: normal;
+    src: url("../fonts/Cookie-Regular.ttf");
+}
+
+
 .blue-button {
     -fx-background-color:
         linear-gradient(from 0% 0% to 0% 100%, #e0e0e0, #c0c0c0),
@@ -26,4 +44,16 @@
     -fx-border-width: 3px;
     -fx-border-style: dashed;
     -fx-border-radius: 22px;
+}
+
+* {
+    -fx-font-family: Satoshi;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.cookie-font {
+    -fx-font-family: Cookie;
 }

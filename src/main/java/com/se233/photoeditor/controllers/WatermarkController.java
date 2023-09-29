@@ -38,7 +38,7 @@ public class WatermarkController {
     @FXML
     private ImageView previewImageView;
     @FXML
-    private Button previousImgBtn, nextImgBtn, startWatermarkBtn;
+    private Button previousImgBtn, nextImgBtn, startWatermarkBtn, backBtn;
     @FXML
     private ProgressBar progressBar;
     private Color fontColor;
@@ -98,6 +98,14 @@ public class WatermarkController {
             if (this.currentImageIndex < imageFiles.size() - 1) {
                 this.currentImageIndex++;
                 updatePreviewOnBackground();
+            }
+        });
+
+        backBtn.setOnAction(event -> {
+            try {
+                Launcher.getStage().setScene(Launcher.getDragAndDropScene());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
 
