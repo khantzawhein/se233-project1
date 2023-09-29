@@ -39,7 +39,7 @@ public class BatchExportResizeTask extends Task<Void> {
     protected Void call() {
         try {
             this.work();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             Platform.runLater(() -> {
                 ErrorAlert errorAlert = new ErrorAlert(e);
                 errorAlert.showAlert();

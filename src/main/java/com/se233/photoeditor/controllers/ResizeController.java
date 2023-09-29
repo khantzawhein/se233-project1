@@ -21,7 +21,6 @@ import java.io.IOException;
 public class ResizeController {
     @FXML
     private AnchorPane percentageResizePane, heightResizePane, widthResizePane;
-
     private ResizeEditMode currentEditMode;
     @FXML
     private ComboBox<String> outputFormat;
