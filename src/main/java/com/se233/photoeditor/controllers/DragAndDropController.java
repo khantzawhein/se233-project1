@@ -147,6 +147,7 @@ public class DragAndDropController {
                 Launcher.getImageFiles().remove(imageFile);
                 addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());
                 resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
+                fileListLabel.setVisible(Launcher.getImageFiles().isEmpty());
                 Launcher.getImageFiles().remove(imageFile);
                 imageFileListScrollPane.getChildren().remove(imageFileItemPane.getImageFileItemPane());
             });
