@@ -28,6 +28,9 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Font.loadFont(Launcher.class.getResource("assets/fonts/Satoshi-Regular.otf").toExternalForm(), 10);
+        Font.loadFont(Launcher.class.getResource("assets/fonts/Satoshi-Bold.otf").toExternalForm(), 10);
+        Font.loadFont(Launcher.class.getResource("assets/fonts/Cookie-Regular.ttf").toExternalForm(), 10);
         imageFiles = FXCollections.observableList(new ArrayList<>());
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         Launcher.stage = stage;

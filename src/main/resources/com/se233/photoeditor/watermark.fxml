@@ -132,12 +132,12 @@
          <top>
             <AnchorPane prefHeight="100.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text layoutX="227.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select your preferred settings:" textAlignment="CENTER">
+                  <Text layoutX="433.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select your preferred settings:" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Text>
-                  <Text layoutX="17.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="cookie-font" text="Potato and French Fry" wrappingWidth="220.6339988708496">
+                  <Text layoutX="227.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="cookie-font" text="SE233 Project 1 by Potato and French Fry" textAlignment="CENTER" wrappingWidth="346.6339988708496">
                      <font>
                         <Font size="20.0" />
                      </font>

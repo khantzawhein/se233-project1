@@ -1,18 +1,15 @@
 @font-face {
     font-family: Satoshi, sans-serif;
     font-weight: normal;
-    src: url("../fonts/Satoshi-Regular.otf");
 }
 @font-face {
     font-family: Satoshi, sans-serif;
     font-weight: bold;
-    src: url("../fonts/Satoshi-Bold.otf");
 }
 
 @font-face {
     font-family: Cookie, sans-serif;
     font-weight: normal;
-    src: url("../fonts/Cookie-Regular.ttf");
 }
 
 
