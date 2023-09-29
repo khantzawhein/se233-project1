@@ -140,7 +140,6 @@ public class DragAndDropController {
     }
 
     public void updateFileItemUI(ImageFile imageFile) {
-        System.out.println(imageFile);
         try {
             ImageFileItemPane imageFileItemPane = new ImageFileItemPane(imageFile);
             imageFileItemPane.setDeleteHandler(event -> {
@@ -151,7 +150,6 @@ public class DragAndDropController {
                 Launcher.getImageFiles().remove(imageFile);
                 imageFileListScrollPane.getChildren().remove(imageFileItemPane.getImageFileItemPane());
             });
-            System.out.println(imageFileItemPane.getImageFileItemPane());
             imageFileListScrollPane.getChildren().add(imageFileItemPane.getImageFileItemPane());
             addWaterMarkBtn.setDisable(Launcher.getImageFiles().isEmpty());
             resizeBtn.setDisable(Launcher.getImageFiles().isEmpty());
