@@ -25,7 +25,7 @@
                <children>
                   <AnchorPane prefHeight="500.0" prefWidth="398.0">
                      <children>
-                        <Label layoutX="27.0" layoutY="14.0" text="Preview">
+                        <Label layoutX="35.0" layoutY="14.0" text="Preview">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -35,10 +35,10 @@
                               <ImageView fx:id="previewImageView" fitHeight="306.0" fitWidth="339.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
                            </children>
                         </StackPane>
-                        <Text layoutX="70.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:" />
-                        <ProgressBar fx:id="progressBar" layoutX="133.0" layoutY="421.0" prefWidth="200.0" progress="0.0" />
-                        <Button fx:id="previousImgBtn" layoutX="258.0" layoutY="370.0" mnemonicParsing="false" text="Previous" />
-                        <Button fx:id="nextImgBtn" layoutX="340.0" layoutY="370.0" mnemonicParsing="false" text="Next" />
+                        <Text layoutX="46.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:" />
+                        <ProgressBar fx:id="progressBar" layoutX="109.0" layoutY="439.0" prefWidth="200.0" progress="0.0" />
+                        <Button fx:id="previousImgBtn" layoutX="139.0" layoutY="371.0" mnemonicParsing="false" style="-fx-background-color: #C0875B; -fx-text-fill: white;" text="Previous" />
+                        <Button fx:id="nextImgBtn" layoutX="221.0" layoutY="371.0" mnemonicParsing="false" style="-fx-background-color: #C0875B; -fx-text-fill: white;" text="Next" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="500.0" prefWidth="400.0">

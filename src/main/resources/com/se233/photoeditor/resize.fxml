@@ -34,21 +34,21 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="256.0" layoutY="147.0" prefHeight="418.0" prefWidth="496.0">
+      <AnchorPane layoutX="261.0" layoutY="147.0" prefHeight="418.0" prefWidth="496.0">
          <children>
-            <ProgressBar fx:id="progressBar" layoutX="18.0" layoutY="288.0" prefWidth="200.0" progress="0.0" />
+            <ProgressBar fx:id="progressBar" layoutX="16.0" layoutY="288.0" prefWidth="200.0" progress="0.0" />
             <ComboBox fx:id="outputFormat" layoutX="15.0" layoutY="60.0" prefHeight="27.0" prefWidth="309.0" />
             <Label layoutX="17.0" layoutY="30.0" prefHeight="19.0" prefWidth="122.0" text="Image Format">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="18.0" layoutY="176.0" prefHeight="26.0" prefWidth="116.0" text="Image Quality">
+            <Label layoutX="16.0" layoutY="176.0" prefHeight="26.0" prefWidth="116.0" text="Image Quality">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Slider fx:id="imageQualitySlider" layoutX="18.0" layoutY="209.0" majorTickUnit="5.0" min="25.0" prefHeight="15.0" prefWidth="310.0" showTickLabels="true" value="80.0" />
+            <Slider fx:id="imageQualitySlider" layoutX="12.0" layoutY="208.0" majorTickUnit="5.0" min="25.0" prefHeight="15.0" prefWidth="310.0" showTickLabels="true" value="80.0" />
             <Button fx:id="startBtn" layoutX="17.0" layoutY="344.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="99.0" style="-fx-background-color: #C0875B;" text="Apply" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.800000190734863" />
@@ -60,7 +60,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="20.0" layoutY="256.0" prefHeight="26.0" prefWidth="116.0" text="Progress">
+            <Label layoutX="18.0" layoutY="256.0" prefHeight="26.0" prefWidth="116.0" text="Progress">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
