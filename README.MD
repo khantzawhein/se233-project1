@@ -1,5 +1,7 @@
 # Photo Editor (A project of SE 233)
 
+![Logo](./package/macos/PhotoEditor-background.png)
+
 ## Introduction
 This is a project of SE 233, which is a photo editor. It can be used to batch edit photos, such as add watermarks, resizing, etc. It is a GUI application, and it is written in Java.
 
