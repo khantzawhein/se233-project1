@@ -8,8 +8,9 @@ This is a project of SE 233, which is a photo editor. It can be used to batch ed
 This application utilize multi-threading to improve the performance of the application. It also uses MVC design pattern to make the code more readable and maintainable.
 
 ## How to use
-### Compile
-To compile the project, you need to have JDK 20 or above installed. Then, you can use the following command to compile the project
+### Compile & Run
+To compile and run the project, you need to have JDK 20 or above installed. Then, you can use the following command to compile and run the project
+Run the `Launcher.java` from the `src/main/java/com/se233/PhotoEditor` directory using IntelliJ.
 
 ### Package
 To package the project, you need to have JDK 20 or above installed. Then, you can use the following command to package the project
