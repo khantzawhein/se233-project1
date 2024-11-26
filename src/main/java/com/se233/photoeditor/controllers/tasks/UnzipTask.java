@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 import java.util.zip.ZipException;
 
 public class UnzipTask implements Callable<ArrayList<File>> {
-    private File zipFile;
+    private final File zipFile;
 
     public UnzipTask(File zipFile) {
         this.zipFile = zipFile;

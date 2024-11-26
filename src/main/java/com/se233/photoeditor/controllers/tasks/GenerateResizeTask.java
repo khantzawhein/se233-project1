@@ -1,6 +1,7 @@
 package com.se233.photoeditor.controllers.tasks;
 
 import com.se233.photoeditor.enums.ResizeEditMode;
+import com.se233.photoeditor.models.GenerateResizeTaskInput;
 import com.se233.photoeditor.models.ImageFile;
 import com.se233.photoeditor.views.ErrorAlert;
 import javafx.application.Platform;
@@ -18,21 +19,10 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public class GenerateResizeTask implements Callable<Void> {
-    private final ImageFile imageFile;
-    private final int i, x, imgQuality;
-    private final ResizeEditMode resizeEditMode;
-    private final String outputFormat, outputPath;
-    private final Color imageBackgroundColor;
+    private final GenerateResizeTaskInput input;
 
-    public GenerateResizeTask(ImageFile imageFile, int i, ResizeEditMode resizeEditMode, int x, String outputFormat, String outputPath, int imgQuality, Color imageBackgroundColor) {
-        this.imageFile = imageFile;
-        this.i = i;
-        this.resizeEditMode = resizeEditMode;
-        this.x = x;
-        this.outputFormat = outputFormat;
-        this.outputPath = outputPath;
-        this.imgQuality = imgQuality;
-        this.imageBackgroundColor = imageBackgroundColor;
+    public GenerateResizeTask(GenerateResizeTaskInput generateResizeTaskInput) {
+        this.input = generateResizeTaskInput;
     }
 
     @Override
@@ -50,26 +40,26 @@ public class GenerateResizeTask implements Callable<Void> {
     }
 
     private void work() throws IOException {
-        BufferedImage bufferedImage = ImageIO.read(new File(this.imageFile.getPath()));
-        if (resizeEditMode == ResizeEditMode.WIDTH) {
-            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_WIDTH, x);
-        } else if (resizeEditMode == ResizeEditMode.HEIGHT) {
-            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_HEIGHT, x);
-        } else if (resizeEditMode == ResizeEditMode.PERCENTAGE) {
-            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT, (int) (bufferedImage.getWidth() * x / 100.0), (int) (bufferedImage.getHeight() * x / 100.0));
+        BufferedImage bufferedImage = ImageIO.read(new File(this.input.imageFile().getPath()));
+        if (this.input.resizeEditMode() == ResizeEditMode.WIDTH) {
+            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_WIDTH, this.input.x());
+        } else if (this.input.resizeEditMode() == ResizeEditMode.HEIGHT) {
+            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_HEIGHT, this.input.x());
+        } else if (this.input.resizeEditMode() == ResizeEditMode.PERCENTAGE) {
+            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT, (int) (bufferedImage.getWidth() * this.input.x() / 100.0), (int) (bufferedImage.getHeight() * this.input.x() / 100.0));
         }
-        File file = new File(this.outputPath + "/" + FilenameUtils.getBaseName(this.imageFile.getName()) + "-resized-" + i + "." + this.outputFormat.toLowerCase());
-        ImageWriter imageWriter = ImageIO.getImageWritersByFormatName(this.outputFormat.toLowerCase()).next();
+        File file = new File(this.input.outputPath() + "/" + FilenameUtils.getBaseName(this.input.imageFile().getName()) + "-resized-" + this.input.i() + "." + this.input.outputFormat().toLowerCase());
+        ImageWriter imageWriter = ImageIO.getImageWritersByFormatName(this.input.outputFormat().toLowerCase()).next();
         ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
         imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        imageWriteParam.setCompressionQuality(this.imgQuality / 100.0f);
+        imageWriteParam.setCompressionQuality(this.input.imgQuality() / 100.0f);
 
         BufferedImage newBufferedImage;
-        boolean isPng = FilenameUtils.getExtension(this.imageFile.getName()).equalsIgnoreCase("png");
+        boolean isPng = FilenameUtils.getExtension(this.input.imageFile().getName()).equalsIgnoreCase("png");
         if (isPng) {
             newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = newBufferedImage.createGraphics();
-            graphics.setColor(this.imageBackgroundColor);
+            graphics.setColor(this.input.imageBackgroundColor());
             graphics.fillRect(0, 0, newBufferedImage.getWidth(), newBufferedImage.getHeight());
             graphics.drawImage(bufferedImage, 0, 0, null);
         } else {

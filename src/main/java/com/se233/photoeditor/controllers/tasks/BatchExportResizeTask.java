@@ -1,38 +1,21 @@
 package com.se233.photoeditor.controllers.tasks;
 
 import com.se233.photoeditor.Launcher;
-import com.se233.photoeditor.enums.ResizeEditMode;
+import com.se233.photoeditor.models.BatchExportResizeInput;
+import com.se233.photoeditor.models.GenerateResizeTaskInput;
 import com.se233.photoeditor.models.ImageFile;
 import com.se233.photoeditor.views.ErrorAlert;
 import com.se233.photoeditor.views.ExportSuccessAlert;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutorCompletionService;
 
-public class BatchExportResizeTask extends Task<Void> {
-    private final ObservableList<ImageFile> imageFiles;
-    private final String outputFormat;
-    private final File outputDir;
-    private final Color imageBackgroundColor;
-    private final int x;
-    private final int imgQuality;
-    private final ResizeEditMode resizeEditMode;
+public class BatchExportResizeTask extends BaseTask<Void> {
+    private final BatchExportResizeInput input;
 
-    public BatchExportResizeTask(ObservableList<ImageFile> imageFiles, ResizeEditMode resizeEditMode, int x, String outputFormat, File outputDir, int imgQuality, Color imageBackgroundColor) {
-        this.resizeEditMode = resizeEditMode;
-        this.imageFiles = imageFiles;
-        this.x = x;
-        this.outputFormat = outputFormat;
-        this.outputDir = outputDir;
-        this.imgQuality = imgQuality;
-        this.imageBackgroundColor = imageBackgroundColor;
+    public BatchExportResizeTask(BatchExportResizeInput batchExportResizeInput) {
+        this.input = batchExportResizeInput;
     }
 
     @Override
@@ -48,22 +31,34 @@ public class BatchExportResizeTask extends Task<Void> {
         return null;
     }
 
-    private void work() throws InterruptedException {
+    @Override
+    protected Void work() throws InterruptedException {
         long startTime = System.currentTimeMillis();
         CompletionService<Void> completionService = new ExecutorCompletionService<>(Launcher.getExecutorService());
-        for (int i = 0; i < imageFiles.size(); i++) {
-            ImageFile imageFile = imageFiles.get(i);
-            completionService.submit(new GenerateResizeTask(imageFile, i, resizeEditMode, x, outputFormat, outputDir.getAbsolutePath(), imgQuality, imageBackgroundColor));
+        for (int i = 0; i < this.input.imageFiles().size(); i++) {
+            ImageFile imageFile = this.input.imageFiles().get(i);
+            GenerateResizeTaskInput generateResizeTaskInput = getGenerateResizeTaskInput(imageFile, i);
+            completionService.submit(new GenerateResizeTask(generateResizeTaskInput));
         }
-        for (int i = 0; i < imageFiles.size(); i++) {
+        for (int i = 0; i < this.input.imageFiles().size(); i++) {
             completionService.take();
-            this.updateProgress(i + 1, imageFiles.size());
+            this.updateProgress(i + 1, this.input.imageFiles().size());
         }
 
         long endTime = System.currentTimeMillis();
         Platform.runLater(() -> {
-            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir, "Resized images has been exported to destination folder successfully!", endTime - startTime);
+            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(this.input.outputDir(), "Resized images has been exported to destination folder successfully!", endTime - startTime);
             exportSuccessAlert.showAlert();
         });
+        return null;
+    }
+
+    private GenerateResizeTaskInput getGenerateResizeTaskInput(ImageFile imageFile, int i) {
+        return GenerateResizeTaskInput.builder()
+                .imageFile(imageFile).i(i).resizeEditMode(this.input.resizeEditMode())
+                .x(this.input.x()).outputFormat(this.input.outputFormat())
+                .outputPath(this.input.outputDir().getAbsolutePath())
+                .imgQuality(this.input.imgQuality())
+                .imageBackgroundColor(this.input.imageBackgroundColor()).build();
     }
 }

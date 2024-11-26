@@ -1,5 +1,6 @@
 package com.se233.photoeditor.controllers.tasks;
 
+import com.se233.photoeditor.models.GenerateWatermarkTaskInput;
 import com.se233.photoeditor.models.ImageFile;
 import com.se233.photoeditor.views.ErrorAlert;
 import javafx.application.Platform;
@@ -16,28 +17,10 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 public class GenerateWatermarkTask implements Callable<Void> {
-    private ImageFile imageFile;
-    private String font;
-    private String outputFormat, watermarkText, outputPath;
-    private int fontSize, offsetX, offsetY, rotateDeg, paddingX;
-    private Color color;
-    private BufferedImage bufferedImage;
-    private int i;
+    private final GenerateWatermarkTaskInput input;
 
-    public GenerateWatermarkTask(ImageFile imageFile, int i, String font, String watermarkText, String outputFormat, String outputPath,
-                                 Color color, int rotateDeg, int fontSize, int offsetX, int offsetY, int paddingX) {
-        this.imageFile = imageFile;
-        this.font = font;
-        this.watermarkText = watermarkText;
-        this.outputFormat = outputFormat;
-        this.fontSize = fontSize;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-        this.paddingX = paddingX;
-        this.rotateDeg = rotateDeg;
-        this.color = color;
-        this.outputPath = outputPath;
-        this.i = i;
+    public GenerateWatermarkTask(GenerateWatermarkTaskInput generateWatermarkTaskInput) {
+        this.input = generateWatermarkTaskInput;
     }
 
     @Override
@@ -55,26 +38,26 @@ public class GenerateWatermarkTask implements Callable<Void> {
     }
 
     private void work() throws IOException {
-        bufferedImage = ImageIO.read(new File(this.imageFile.getPath()));
+        BufferedImage bufferedImage = ImageIO.read(new File(this.input.imageFile().getPath()));
 
         double width = bufferedImage.getWidth();
         double height = bufferedImage.getHeight();
 
         Graphics2D g = bufferedImage.createGraphics();
-        Font font = new Font(this.font, Font.PLAIN, this.fontSize);
+        Font font = new Font(this.input.font(), Font.PLAIN, this.input.fontSize());
         FontMetrics fontMetrics = bufferedImage.getGraphics().getFontMetrics(font);
 
-        double x = width / 2 - (double) fontMetrics.stringWidth(this.watermarkText) / 2;
+        double x = width / 2 - (double) fontMetrics.stringWidth(this.input.watermarkText()) / 2;
         double y = height / 2 + (double) fontMetrics.getHeight() / 2;
-        double rotateWidthOffset = (double) fontMetrics.stringWidth(this.watermarkText) / 2;
+        double rotateWidthOffset = (double) fontMetrics.stringWidth(this.input.watermarkText()) / 2;
         double rotateHeightOffset = (double) fontMetrics.getHeight() / 2;
-        int paddingX = this.paddingX * 2;
+        int paddingX = this.input.paddingX() * 2;
 
         g.setFont(font);
-        g.rotate(Math.toRadians(this.rotateDeg), x + rotateWidthOffset + this.offsetX, y - rotateHeightOffset + this.offsetY);
-        g.setColor(this.color);
-        g.drawString(this.watermarkText, (int) x + paddingX + +this.offsetX, (int) y + this.offsetY);
-        File file = new File(this.outputPath + "/" + FilenameUtils.getBaseName(this.imageFile.getName()) + "-watermarked-" + i + "." + this.outputFormat.toLowerCase());
-        ImageIO.write(bufferedImage, this.outputFormat.toLowerCase(), file);
+        g.rotate(Math.toRadians(this.input.rotateDeg()), x + rotateWidthOffset + this.input.offsetX(), y - rotateHeightOffset + this.input.offsetY());
+        g.setColor(this.input.color());
+        g.drawString(this.input.watermarkText(), (int) x + paddingX + +this.input.offsetX(), (int) y + this.input.offsetY());
+        File file = new File(this.input.outputPath() + "/" + FilenameUtils.getBaseName(this.input.imageFile().getName()) + "-watermarked-" + this.input.i() + "." + this.input.outputFormat().toLowerCase());
+        ImageIO.write(bufferedImage, this.input.outputFormat().toLowerCase(), file);
     }
 }

@@ -3,6 +3,7 @@ package com.se233.photoeditor.controllers;
 import com.se233.photoeditor.Launcher;
 import com.se233.photoeditor.controllers.tasks.BatchExportResizeTask;
 import com.se233.photoeditor.enums.ResizeEditMode;
+import com.se233.photoeditor.models.BatchExportResizeInput;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ public class ResizeController {
     private Slider imageQualitySlider;
     @FXML
     private TextField percentageField, heightField, widthField;
+
     @FXML
     public void initialize() {
         outputFormat.getItems().addAll("JPEG", "PNG");
@@ -51,7 +53,10 @@ public class ResizeController {
                 int x = ResizeEditMode.PERCENTAGE == this.currentEditMode ? Integer.parseInt(percentageField.getText().isEmpty() ? "0" : percentageField.getText()) :
                         ResizeEditMode.WIDTH == this.currentEditMode ? Integer.parseInt(widthField.getText().isEmpty() ? "0" : widthField.getText()) :
                                 Integer.parseInt(heightField.getText().isEmpty() ? "0" : heightField.getText());
-                Task<Void> batchExportResizeTask = new BatchExportResizeTask(Launcher.getImageFiles(), this.currentEditMode, x, outputFormat.getSelectionModel().getSelectedItem(), selectedDirectory, (int) imageQualitySlider.getValue(), color);
+
+                BatchExportResizeInput batchExportResizeInput = getBatchExportResizeInput(selectedDirectory, x, color);
+
+                Task<Void> batchExportResizeTask = new BatchExportResizeTask(batchExportResizeInput);
                 Launcher.getExecutorService().submit(batchExportResizeTask);
                 progressBar.progressProperty().bind(batchExportResizeTask.progressProperty());
             }
@@ -63,6 +68,13 @@ public class ResizeController {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    private BatchExportResizeInput getBatchExportResizeInput(File selectedDirectory, int x, Color color) {
+        return BatchExportResizeInput.builder().imageFiles(Launcher.getImageFiles()).outputDir(selectedDirectory)
+                .resizeEditMode(this.currentEditMode).x(x)
+                .outputFormat(outputFormat.getSelectionModel().getSelectedItem())
+                .imgQuality((int) imageQualitySlider.getValue()).imageBackgroundColor(color).build();
     }
 
     private ChangeListener<String> acceptOnlyNumberInTextListener(TextField textField) {

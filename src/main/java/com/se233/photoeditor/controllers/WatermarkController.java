@@ -2,6 +2,7 @@ package com.se233.photoeditor.controllers;
 
 import com.se233.photoeditor.Launcher;
 import com.se233.photoeditor.controllers.tasks.BatchExportWatermarkTask;
+import com.se233.photoeditor.models.BatchExportWatermarkTaskInput;
 import com.se233.photoeditor.models.ImageFile;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -114,20 +115,31 @@ public class WatermarkController {
             directoryChooser.setTitle("Select Output Directory");
             File selectedDirectory = directoryChooser.showDialog(Launcher.getStage());
             if (selectedDirectory != null) {
-                Task<Void> batchExportWatermarkTask = new BatchExportWatermarkTask(Launcher.getImageFiles(), selectedDirectory, fontPicker.getValue(),
-                        watermarkText.getText(), outputFormat.getValue(), fontColor,
-                        (int) rotationSlider.getValue(), (int) sizeSlider.getValue(),
-                        this.offsetX, this.offsetY,(int) paddingSlider.getValue());
+                BatchExportWatermarkTaskInput batchExportWatermarkTaskInput = getBatchExportWatermarkTaskInput(selectedDirectory);
+                Task<Void> batchExportWatermarkTask = new BatchExportWatermarkTask(batchExportWatermarkTaskInput);
 
                 Launcher.getExecutorService().submit(batchExportWatermarkTask);
 
                 progressBar.progressProperty().bind(batchExportWatermarkTask.progressProperty());
             }
-
         });
-
         updatePreviewOnBackground();
+    }
 
+    private BatchExportWatermarkTaskInput getBatchExportWatermarkTaskInput(File selectedDirectory) {
+        return BatchExportWatermarkTaskInput.builder()
+                .imageFiles(Launcher.getImageFiles())
+                .outputDir(selectedDirectory)
+                .font(fontPicker.getValue())
+                .watermarkText(watermarkText.getText())
+                .outputFormat(outputFormat.getValue())
+                .color(fontColor)
+                .rotateDeg((int) rotationSlider.getValue())
+                .fontSize((int) sizeSlider.getValue())
+                .offsetX(this.offsetX)
+                .offsetY(this.offsetY)
+                .paddingX((int) paddingSlider.getValue())
+                .build();
     }
 
     private void updatePreviewOnBackground() {
