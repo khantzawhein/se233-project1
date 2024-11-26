@@ -10,6 +10,7 @@ module com.se233.photoeditor {
     requires javafx.swing;
     requires org.apache.commons.compress;
     requires imgscalr.lib;
+    requires static lombok;
 
     opens com.se233.photoeditor to javafx.fxml;
     opens com.se233.photoeditor.controllers to javafx.fxml;

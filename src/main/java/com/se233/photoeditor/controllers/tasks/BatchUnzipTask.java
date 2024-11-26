@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class BatchUnzipTask extends Task<ArrayList<ImageFile>> {
+public class BatchUnzipTask extends BaseTask<ArrayList<ImageFile>> {
 
     private ArrayList<File> zipFiles;
 
@@ -41,7 +41,9 @@ public class BatchUnzipTask extends Task<ArrayList<ImageFile>> {
         return null;
     }
 
-    private ArrayList<ImageFile> work() throws InterruptedException, ExecutionException {
+
+    @Override
+    protected ArrayList<ImageFile> work() throws InterruptedException, ExecutionException {
         ArrayList<ArrayList<File>> allFiles = new ArrayList<>();
         CompletionService<ArrayList<File>> completionService = new ExecutorCompletionService<>(Launcher.getExecutorService());
         for (File file : zipFiles) {

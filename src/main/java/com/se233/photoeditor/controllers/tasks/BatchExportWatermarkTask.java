@@ -1,43 +1,20 @@
 package com.se233.photoeditor.controllers.tasks;
 
 import com.se233.photoeditor.Launcher;
+import com.se233.photoeditor.models.BatchExportWatermarkTaskInput;
+import com.se233.photoeditor.models.GenerateWatermarkTaskInput;
 import com.se233.photoeditor.models.ImageFile;
 import com.se233.photoeditor.views.ErrorAlert;
 import com.se233.photoeditor.views.ExportSuccessAlert;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.scene.control.Alert;
 
-import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.concurrent.*;
 
-public class BatchExportWatermarkTask extends Task<Void> {
-    private ObservableList<ImageFile> imageFiles;
-    private String font;
-    private String outputFormat, watermarkText;
-    private int fontSize, offsetX, offsetY, rotateDeg, paddingX;
-    private Color color;
+public class BatchExportWatermarkTask extends BaseTask<Void> {
+    private final BatchExportWatermarkTaskInput input;
 
-    private File outputDir;
-
-    public BatchExportWatermarkTask(ObservableList<ImageFile> imageFiles, File outputDir, String font,
-                                    String watermarkText, String outputFormat, Color color,
-                                    int rotateDeg,
-                                    int fontSize, int offsetX, int offsetY, int paddingX) {
-        this.imageFiles = imageFiles;
-        this.font = font;
-        this.watermarkText = watermarkText;
-        this.outputFormat = outputFormat;
-        this.fontSize = fontSize;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-        this.paddingX = paddingX;
-        this.rotateDeg = rotateDeg;
-        this.color = color;
-        this.outputDir = outputDir;
+    public BatchExportWatermarkTask(BatchExportWatermarkTaskInput batchExportWatermarkTaskInput) {
+        this.input = batchExportWatermarkTaskInput;
     }
 
     @Override
@@ -53,23 +30,39 @@ public class BatchExportWatermarkTask extends Task<Void> {
         return null;
     }
 
-    private void work() throws InterruptedException {
+    protected Void work() throws InterruptedException {
         long startTime = System.currentTimeMillis();
         CompletionService<Void> completionService = new ExecutorCompletionService<>(Launcher.getExecutorService());
-        for (int i = 0; i < imageFiles.size(); i++) {
-            ImageFile imageFile = imageFiles.get(i);
-            completionService.submit(new GenerateWatermarkTask(imageFile, i, font, watermarkText, outputFormat, outputDir.getAbsolutePath(), color, rotateDeg, fontSize, offsetX, offsetY, paddingX));
+        for (int i = 0; i < this.input.imageFiles().size(); i++) {
+            ImageFile imageFile = this.input.imageFiles().get(i);
+            GenerateWatermarkTaskInput generateWatermarkTaskInput = getGenerateWatermarkTaskInput(imageFile, i);
+            completionService.submit(new GenerateWatermarkTask(generateWatermarkTaskInput));
 
         }
-        for (int i = 0; i < imageFiles.size(); i++) {
+        for (int i = 0; i < this.input.imageFiles().size(); i++) {
             completionService.take();
-            this.updateProgress(i + 1, imageFiles.size());
+            this.updateProgress(i + 1, this.input.imageFiles().size());
         }
 
         long endTime = System.currentTimeMillis();
         Platform.runLater(() -> {
-            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(outputDir, "Watermarked images has been exported to destination folder successfully!", endTime - startTime);
+            ExportSuccessAlert exportSuccessAlert = new ExportSuccessAlert(this.input.outputDir(), "Watermarked images has been exported to destination folder successfully!", endTime - startTime);
             exportSuccessAlert.showAlert();
         });
+        return null;
+    }
+
+    private GenerateWatermarkTaskInput getGenerateWatermarkTaskInput(ImageFile imageFile, int i) {
+        return GenerateWatermarkTaskInput.builder()
+                .imageFile(imageFile).i(i).font(this.input.font())
+                .watermarkText(this.input.watermarkText())
+                .outputFormat(this.input.outputFormat())
+                .outputPath(this.input.outputDir().getAbsolutePath())
+                .color(this.input.color())
+                .rotateDeg(this.input.rotateDeg())
+                .fontSize(this.input.fontSize())
+                .offsetX(this.input.offsetX())
+                .offsetY(this.input.offsetY())
+                .paddingX(this.input.paddingX()).build();
     }
 }
