@@ -65,7 +65,8 @@ public class GenerateResizeTask implements Callable<Void> {
         imageWriteParam.setCompressionQuality(this.imgQuality / 100.0f);
 
         BufferedImage newBufferedImage;
-        if (FilenameUtils.getExtension(this.imageFile.getName()).equalsIgnoreCase("png")) {
+        boolean isPng = FilenameUtils.getExtension(this.imageFile.getName()).equalsIgnoreCase("png");
+        if (isPng) {
             newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = newBufferedImage.createGraphics();
             graphics.setColor(this.imageBackgroundColor);

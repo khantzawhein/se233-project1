@@ -69,7 +69,10 @@ public class DragAndDropController {
             List<File> files = dragboard.getFiles();
             for (File file : files) {
                 // Not jpg and not png and not zip
-                if (!file.getName().endsWith(".jpg") && !file.getName().endsWith(".jpeg") && !file.getName().endsWith(".png") && !file.getName().endsWith(".zip")) {
+                boolean isJpeg = file.getName().endsWith(".jpeg") || file.getName().endsWith(".jpg");
+                boolean isZip = file.getName().endsWith(".zip");
+                boolean isPng = file.getName().endsWith(".png");
+                if (!isJpeg && !isPng && !isZip) {
                     event.consume();
                     return;
                 }

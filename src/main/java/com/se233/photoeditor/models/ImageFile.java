@@ -9,7 +9,8 @@ public class ImageFile {
     public ImageFile(String name, String path, String type, long size) {
         this.name = name;
         this.path = path;
-        if (!type.equals("png") && !type.equals("jpg") && !type.equals("jpeg")) {
+        boolean isValidType = type.equals("png") || type.equals("jpg") || type.equals("jpeg");
+        if (!isValidType) {
             throw new IllegalArgumentException("Invalid Extension");
         } else {
             this.type = type;
