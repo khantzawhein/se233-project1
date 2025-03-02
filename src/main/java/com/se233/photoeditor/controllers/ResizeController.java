@@ -71,7 +71,8 @@ public class ResizeController {
     }
 
     private BatchExportResizeInput getBatchExportResizeInput(File selectedDirectory, int x, Color color) {
-        return BatchExportResizeInput.builder().imageFiles(Launcher.getImageFiles()).outputDir(selectedDirectory)
+        return BatchExportResizeInput.builder()
+                .imageFiles(Launcher.getImageFiles()).outputDir(selectedDirectory)
                 .resizeEditMode(this.currentEditMode).x(x)
                 .outputFormat(outputFormat.getSelectionModel().getSelectedItem())
                 .imgQuality((int) imageQualitySlider.getValue()).imageBackgroundColor(color).build();

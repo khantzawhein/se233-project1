@@ -8,5 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.awt.*;
 
 @Builder
-public record GenerateResizeTaskInput(ImageFile imageFile, int i, ResizeEditMode resizeEditMode, int x, String outputFormat, String outputPath, int imgQuality, Color imageBackgroundColor) {
+public record GenerateResizeTaskInput(ImageFile imageFile, int i,
+                                      ResizeEditMode resizeEditMode, int x, String outputFormat,
+                                      String outputPath, int imgQuality, Color imageBackgroundColor) {
 }
